@@ -35,7 +35,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.msg = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.ofd = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -104,12 +104,12 @@
             this.msg.Size = new System.Drawing.Size(734, 129);
             this.msg.TabIndex = 6;
             // 
-            // textBox5
+            // ofd
             // 
-            this.textBox5.Location = new System.Drawing.Point(12, 422);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(367, 25);
-            this.textBox5.TabIndex = 7;
+            this.ofd.Location = new System.Drawing.Point(12, 422);
+            this.ofd.Name = "ofd";
+            this.ofd.Size = new System.Drawing.Size(367, 25);
+            this.ofd.TabIndex = 7;
             // 
             // button2
             // 
@@ -119,6 +119,7 @@
             this.button2.TabIndex = 8;
             this.button2.Text = "选择";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -128,6 +129,7 @@
             this.button3.TabIndex = 9;
             this.button3.Text = "发送文件";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -167,7 +169,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.ofd);
             this.Controls.Add(this.msg);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.button1);
@@ -192,7 +194,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.TextBox msg;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox ofd;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;

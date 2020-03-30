@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -110,16 +111,51 @@ namespace socket
 
         private void button5_Click(object sender, EventArgs e)
         {
-          
+            byte[] buffer = new byte[1];
+            buffer[0] = 2;
+            dictory[cbouser.SelectedItem.ToString()].Send(buffer);
         }
-
+        //0为字节 1为文件 2为震动
+        //集合转数组
         private void button4_Click(object sender, EventArgs e)
         {
             string str = msg.Text;
             byte[] buff = System.Text.Encoding.UTF8.GetBytes(str);
+            List<byte> list = new List<byte>();
+            list.Add(0);
+            list.AddRange(buff);
+            byte[] newbuff = list.ToArray();
             string ip = cbouser.SelectedItem.ToString();
-            dictory[ip].Send(buff);
+            dictory[ip].Send(newbuff);
            // socketSend.Send(buff);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            openFileDialog.Title = "请选择要发送的文件";
+            openFileDialog.Filter = "所有文件|*.*";
+            openFileDialog.ShowDialog();
+            ofd.Text = openFileDialog.FileName;
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string path = ofd.Text;
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                byte[] buffer = new byte[1024 * 1024 * 2];
+                int r = fs.Read(buffer, 0, buffer.Length);
+                List<byte> list = new List<byte>();
+                list.Add(1);
+                list.AddRange(buffer);
+                byte[] newbuff = list.ToArray();
+              
+                dictory[cbouser.SelectedItem.ToString()].Send(newbuff);
+            }
+
         }
     }
 }

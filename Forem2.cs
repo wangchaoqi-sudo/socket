@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
 
 namespace socket
 {
@@ -53,20 +54,50 @@ namespace socket
                 while (true)
                 {
                     byte[] vs = new byte[1024 * 1024 * 2];
-
                     int r = socket.Receive(vs);
+                    //实际接收到有效的字节数
                     if (r == 0)
                     {
                         break;
                     }
-                    string str = Encoding.UTF8.GetString(vs, 0, r); 
+                    if (vs[0] == 0)
+                    {
+         
+                        string str = Encoding.UTF8.GetString(vs, 1, r-1);
                         ShowMsg(socket.RemoteEndPoint + ":" + str);
+                    }else if(vs[0] == 1)
+                    {
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                        saveFileDialog.Title = "请选择要保存的问价";
+                        saveFileDialog.Filter = "所有文件|*.*";
+                        saveFileDialog.ShowDialog(this);
+                        string path = saveFileDialog.FileName;
+                        using(FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write))
+                        {
+                            fs.Write(vs,1, r - 1);
+                        }
+                        MessageBox.Show("保存成功");
+                    }else if(vs[0] == 2)
+                    {
+                        ZD();
+                    }
+                  
+                   
                     
                 }
             }
             catch { }
         }
 
+        void ZD()
+        {
+            for (int i=0;i< 500; i++)
+            {
+                this.Location = new Point(200, 250);
+                this.Location = new Point(250, 260);
+            }
+        }
         private void Forem2_Load(object sender, EventArgs e)
         {
             ContainerControl.CheckForIllegalCrossThreadCalls = false;
